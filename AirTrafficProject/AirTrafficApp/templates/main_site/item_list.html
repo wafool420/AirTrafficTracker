@@ -1,31 +1,32 @@
 {% extends "main_site/layout.html" %}
 {% block title %} Data {% endblock %}
 {% block content %}
-<h1 class="text-center mt-4 fw-bold">Data Table</h1>
 
-<div class="list_container">
-    <style>
-        .table-bordered th,
-        .table-bordered td {
-            border-width: 3px;
-            border-color: #000;
-        }
-    </style>
+<h1 class="text-center mt-4 fw-bold mb-4">Data Table</h1>
 
-    <div class="container" style="max-width: 1800px;">
-        <table class="table table-primary text-center table-bordered">
+<style>
+    table th, td{
+        border: 3px solid black !important;
+    }
+</style>
+
+<div class="container-fluid px-5">
+    <div class="table-responsive">
+        <table class="table table-bordered table-sm table-primary text-center align-middle">
             <thead>
                 <tr>
-                    <th>Log Date</th>
+                    <th>Date of Operation</th>
                     <th>Call Sign</th>
                     <th>Type of Aircraft</th>
-                    <th>Detail</th>
+                    <th>Category</th>
                     <th>Origin</th>
                     <th>Destination</th>
-                    <th>Movement</th>
-                    <th>Time (UTC)</th>
+                    <th>Actual Time</th>
                     <th>Timeliness</th>
-                    <th>Remarks</th>
+                    <th>Type of Flight</th>
+                    <th>GenAv Detail</th>
+                    <th>Bird Strike</th>
+                    <th>Runway Incursion</th>
                     <th>Logged by</th>
                     <th>Actions</th>
                 </tr>
@@ -34,16 +35,18 @@
                 {% if items %}
                     {% for item in items %}
                         <tr class="table-light">
-                            <td>{{ item.date|date:"m/d/y" }}</td>
+                            <td>{{ item.date_of_operation }}</td>
                             <td>{{ item.call_sign }}</td>
                             <td>{{ item.aircraft_type }}</td>
                             <td>{{ item.detail }}</td>
                             <td>{{ item.origin }}</td>
                             <td>{{ item.destination }}</td>
-                            <td>{{ item.action }}</td>
-                            <td>{{ item.time }}</td>
+                            <td>{{ item.actual_time }}</td>
                             <td>{{ item.timeliness }}</td>
-                            <td>{{ item.remarks }}</td>
+                            <td>{{ item.type_of_flight }}</td>
+                            <td>{{ item.genav_detail }}</td>
+                            <td>{{ item.bird_strike }}</td>
+                            <td>{{ item.runway_incursion }}</td>
                             <td>{{ item.user.username }}</td>
                             <td>
                                 <div class="d-flex justify-content-center gap-1">
@@ -60,7 +63,7 @@
                     {% endfor %}
                 {% else %}
                     <tr>
-                        <td colspan="12">
+                        <td colspan="14">
                             <h4 class="text-center py-3">There is currently no data available</h4>
                         </td>
                     </tr>
@@ -69,13 +72,11 @@
         </table>
     </div>
 
-    
-    <div class="d-flex justify-content-center gap-2 mt-4 mb-5">
+    <div class="d-flex justify-content-center gap-3 mt-4 mb-5">
         <form method="GET" action="{% url 'create' %}">
             <button type="submit" class="btn btn-success btn-lg">Create</button>
         </form>
         <form method="GET" action="{% url 'archive' %}">
-            {% csrf_token %}
             <button type="submit" class="btn btn-success btn-lg">Archive Dataset</button>
         </form>
         <form method="GET" action="{% url 'home' %}">
@@ -83,4 +84,5 @@
         </form>
     </div>
 </div>
+
 {% endblock %}

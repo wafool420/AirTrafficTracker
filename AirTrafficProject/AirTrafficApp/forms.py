@@ -21,13 +21,91 @@ class RegisterForm(forms.ModelForm):
         return cleaned_data
 
 class ItemForm(forms.ModelForm):
+    route_of_flights_form = [
+        ('1st Route', 'from Point of Origin to RPMS'),
+        ('2nd Route', 'from RPMS to Point of Destination'),
+        ('3rd Route', 'from Point of Origin to Point of Destination'),
+    ]
+
+    
+
+    bird_strike = forms.ChoiceField(
+        choices=[('yes', 'Yes'), ('no', 'No')],
+        widget=forms.RadioSelect,
+        label="Bird Strike?"
+    )
+
+    runway_incursion = forms.ChoiceField(
+        choices=[('yes', 'Yes'), ('no', 'No')],
+        widget=forms.RadioSelect,
+        label="Runway Incursion?"
+    )
+
+    route_of_flight = forms.ChoiceField(choices=route_of_flights_form)
+    
     class Meta:
         model = Items
-        fields = ['call_sign', 'aircraft_type', 'detail', 'origin', 'destination', 'action','time', 'timeliness', 'remarks']
-
+        fields = [
+            'date_of_operation', 'call_sign', 'aircraft_type', 'detail',
+            'origin', 'destination', 'route_of_flight','actual_time',
+            'timeliness', 'type_of_flight', 'genav_detail', 'bird_strike',
+            'runway_incursion','movement', 'user'
+        ]
         labels = {
-            'time': 'Time (UTC)',  
+            'date_of_operation': 'Date of Operation',
+            'call_sign': 'Call Sign',
+            'aircraft_type': 'Type of Aircraft',
+            'detail': 'Category',
+            'origin': 'Point of Origin',
+            'destination': 'Destination Airport',
+            'route_of_flight': 'Flight route_of_flight',
+            'actual_time': 'Actual Time (UTC)',
+            'timeliness': 'Flight Timeliness',
+            'type_of_flight': 'Type of Flight',
+            'genav_detail': 'If GenAv, the detail:',
         }
+
+        widgets = {
+            'date_of_operation': forms.TextInput(attrs={'placeholder': 'MM/DD/YYYY'}),
+            'call_sign': forms.TextInput(attrs={'placeholder': 'RP-C','id': 'id_call_sign'}),
+            'route_of_flight': forms.Select(attrs={'id': 'id_route_of_flight'}),
+            'origin': forms.TextInput(attrs={'id': 'id_origin'}),
+            'destination': forms.TextInput(attrs={'id': 'id_destination'}),
+            'actual_time': forms.TextInput(attrs={'id': 'id_actual_time'}),
+            'type_of_flight': forms.Select(attrs={'id': 'id_type_of_flight'}),
+            'genav_detail': forms.Select(attrs={'id': 'id_genav_detail'}),
+            'movement': forms.Select(attrs={'id': 'id_movement'}),
+        }
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        genav_detail = cleaned_data.get('genav_detail')
+        flight_type = cleaned_data.get('type_of_flight')
+        movement = cleaned_data.get('movement')
+        bird_strike = cleaned_data.get('bird_strike')
+        runway_incursion = cleaned_data.get('runway_incursion')
+        actual_time = cleaned_data.get('actual_time')
+
+        # Set GenAv Detail to "N/A" if not GenAv
+        if flight_type != "GenAv":
+            cleaned_data['genav_detail'] = "N/A"
+
+        # Format Bird Strike with Flight Type and Movement
+        if flight_type and movement and bird_strike:
+            cleaned_data['bird_strike'] = f"{flight_type} {movement} {bird_strike}"
+
+        # Format Runway Incursion with Flight Type and Movement
+        if flight_type and movement and runway_incursion:
+            cleaned_data['runway_incursion'] = f"{flight_type} {movement} {runway_incursion}"
+
+        # Format Actual Time with Flight Type
+        if flight_type and actual_time:
+            cleaned_data['actual_time'] = f"{flight_type} {actual_time}"
+
+        return cleaned_data
+
+    
+    
 
     
 
