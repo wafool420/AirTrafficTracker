@@ -95,7 +95,7 @@
 
     callSignField.value = "RP-C";
 
-    // Function to update Origin and Destination based on Route
+    
     function updateFields() {
         const value = route_of_flight_Field.value;
         console.log("Updating Route Fields - Selected Value:", value);
@@ -115,7 +115,7 @@
         }
     }
 
-    // Function to show/hide GenAv field based on Flight Type
+    
     function toggleGenAvField() {
         if (typeflightField.value === 'GenAv') {
             genavWrapper.style.display = 'block';
@@ -126,19 +126,19 @@
         }
     }
 
-    // Store all Timeliness options initially
+    
     const allTimelinessOptions = Array.from(timelinessField.options);
     const allGenAvOptions = Array.from(genavField.options);
 
-    // Function to update Timeliness Options based on Flight Type
+    
     function updateTimelinessOptions() {
         const selectedType = typeflightField.value;
         console.log("Updating Timeliness Options for:", selectedType);
         
-        // Clear existing options
+        
         timelinessField.innerHTML = '';
 
-        // Append only matching options for selected type
+        
         allTimelinessOptions.forEach(option => {
             if (option.value.startsWith(selectedType)) {
                 const clonedOption = option.cloneNode(true);
@@ -147,15 +147,15 @@
         });
     }
 
-    // Function to update GenAv Options based on Movement (Arrival, Departure, Enroute)
+    
     function updateGenAvOptions() {
         const selectedMovement = movementField ? movementField.value : '';
         console.log("Updating GenAv Options for Movement:", selectedMovement);
 
-        // Clear existing options
+        
         genavField.innerHTML = '';
 
-        // Append only matching GenAv options based on Movement (Arrival, Departure, Enroute)
+        
         allGenAvOptions.forEach(option => {
             if (option.value.startsWith(selectedMovement)) {
                 const clonedOption = option.cloneNode(true);
@@ -163,7 +163,7 @@
             }
         });
 
-        // If no matching options, set to N/A
+        
         if (genavField.options.length === 0) {
             const naOption = document.createElement("option");
             naOption.value = "N/A";
@@ -172,7 +172,7 @@
         }
     }
 
-    // Initialize on page load
+    
     document.addEventListener('DOMContentLoaded', function() {
         updateFields();
         toggleGenAvField();
@@ -180,7 +180,7 @@
         updateGenAvOptions();
     });
 
-    // Event Listeners to update dynamically
+    
     typeflightField.addEventListener('change', function() {
         toggleGenAvField();
         updateTimelinessOptions();
