@@ -9,6 +9,7 @@ class ArchiveGroup(models.Model):
 
 
 class Items(models.Model):
+    
     category_choices = [
         ('Fixed Wing', 'Fixed Wing'),
         ('Helicopter', 'Helicopter')
@@ -39,8 +40,10 @@ class Items(models.Model):
         ('Military On Time', 'Military On Time'),
         ('Military N/A', 'Military N/A'),
     ]
-    # Commercial Options
+    
+    
     genav_choices = [
+    
     # Arrival Options
         ('Arrival Private', 'Arrival Private'),
         ('Arrival Cargo', 'Arrival Cargo'),

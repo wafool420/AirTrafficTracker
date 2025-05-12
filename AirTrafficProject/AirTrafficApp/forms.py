@@ -27,8 +27,6 @@ class ItemForm(forms.ModelForm):
         ('3rd Route', 'from Point of Origin to Point of Destination'),
     ]
 
-    
-
     bird_strike = forms.ChoiceField(
         choices=[('yes', 'Yes'), ('no', 'No')],
         widget=forms.RadioSelect,
@@ -86,19 +84,18 @@ class ItemForm(forms.ModelForm):
         runway_incursion = cleaned_data.get('runway_incursion')
         actual_time = cleaned_data.get('actual_time')
 
-        # Set GenAv Detail to "N/A" if not GenAv
+       
+        # Name arranging for counter sort
+
         if flight_type != "GenAv":
             cleaned_data['genav_detail'] = "N/A"
 
-        # Format Bird Strike with Flight Type and Movement
         if flight_type and movement and bird_strike:
             cleaned_data['bird_strike'] = f"{flight_type} {movement} {bird_strike}"
 
-        # Format Runway Incursion with Flight Type and Movement
         if flight_type and movement and runway_incursion:
             cleaned_data['runway_incursion'] = f"{flight_type} {movement} {runway_incursion}"
 
-        # Format Actual Time with Flight Type
         if flight_type and actual_time:
             cleaned_data['actual_time'] = f"{flight_type} {actual_time}"
 

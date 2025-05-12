@@ -53,9 +53,8 @@ def home_view(request):
 
 @login_required
 def create_item_view(request):
-    print("Accessing create_item_view")
     if request.method == 'POST':
-        print("Form Submission Detected (POST)")
+        
         form = ItemForm(request.POST)
         if form.is_valid():
             item = form.save(commit=False)     
@@ -64,7 +63,6 @@ def create_item_view(request):
             return redirect('items')
     else:
         form = ItemForm()
-        print("Form Rendering (GET)")
 
     return render(request, 'main_site/create_form.html', {'form': form})
 
@@ -72,8 +70,6 @@ def create_item_view(request):
 @login_required
 def item_list_view(request):
     items = Items.objects.filter(archive_group__isnull=True)
-
-
     return render(request, 'main_site/item_list.html', {'items': items})
 
 @login_required
@@ -128,17 +124,29 @@ def archive_view(request):
             group.commercial_arrival = items.filter(actual_time__icontains="Commercial ARR").count()
             group.commercial_departure = items.filter(actual_time__icontains="Commercial DEP").count()
             group.commercial_enroute = items.filter(actual_time__icontains="Commercial ENRT (on Initial Contact)").count()
-            group.commercial_movement_total = group.commercial_arrival + group.commercial_departure + group.commercial_enroute
+            group.commercial_movement_total = (
+                group.commercial_arrival + 
+                group.commercial_departure + 
+                group.commercial_enroute
+            )
 
             group.genav_arrival = items.filter(actual_time__icontains="GenAv ARR").count()
             group.genav_departure = items.filter(actual_time__icontains="GenAv DEP").count()
             group.genav_enroute = items.filter(actual_time__icontains="GenAv ENRT (on Initial Contact)").count()
-            group.genav_movement_total = group.genav_arrival + group.genav_departure + group.genav_enroute
+            group.genav_movement_total = (
+            group.genav_arrival + 
+            group.genav_departure + 
+            group.genav_enroute
+            )
 
             group.military_arrival = items.filter(actual_time__icontains="Military ARR").count()
             group.military_departure = items.filter(actual_time__icontains="Military DEP").count()
             group.military_enroute = items.filter(actual_time__icontains="Military ENRT (on Initial Contact)").count()
-            group.military_movement_total = group.military_arrival + group.military_departure + group.military_enroute
+            group.military_movement_total = (
+                group.military_arrival + 
+                group.military_departure + 
+                group.military_enroute
+            )
 
             group.arrival_total = group.commercial_arrival + group.genav_arrival + group.military_arrival
             group.departure_total = group.commercial_departure + group.genav_departure + group.military_departure
@@ -155,17 +163,29 @@ def archive_view(request):
             group.commercial_delayed = items.filter(timeliness__icontains="Commercial Delayed").count()
             group.commercial_ontime = items.filter(timeliness__icontains="Commercial On Time").count()
             group.commercial_na = items.filter(timeliness__icontains="Commercial N/A").count()
-            group.commercial_timeliness_total = group.commercial_delayed + group.commercial_ontime + group.commercial_na
+            group.commercial_timeliness_total = (
+                group.commercial_delayed + 
+                group.commercial_ontime + 
+                group.commercial_na
+            )
 
             group.genav_delayed = items.filter(timeliness__icontains="GenAv Delayed").count()
             group.genav_ontime = items.filter(timeliness__icontains="GenAv On Time").count()
             group.genav_na = items.filter(timeliness__icontains="GenAv N/A").count()
-            group.genav_timeliness_total = group.genav_delayed + group.genav_ontime + group.genav_na
+            group.genav_timeliness_total = (
+                group.genav_delayed + 
+                group.genav_ontime + 
+                group.genav_na
+            )
 
             group.military_delayed = items.filter(timeliness__icontains="Military Delayed").count()
             group.military_ontime = items.filter(timeliness__icontains="Military On Time").count()
             group.military_na = items.filter(timeliness__icontains="Military N/A").count()
-            group.military_timeliness_total = group.military_delayed + group.military_ontime + group.military_na
+            group.military_timeliness_total = (
+                group.military_delayed + 
+                group.military_ontime + 
+                group.military_na
+            )
 
             group.delayed_total = group.commercial_delayed + group.genav_delayed + group.military_delayed
             group.ontime_total = group.commercial_ontime + group.genav_ontime + group.military_ontime
@@ -183,7 +203,11 @@ def archive_view(request):
             group.commercial_arrival_birdstrike = items.filter(bird_strike__icontains="Commercial Arrival yes").count()
             group.commercial_departure_birdstrike = items.filter(bird_strike__icontains="Commercial Departure yes").count()
             group.commercial_enroute_birdstrike = items.filter(bird_strike__icontains="Commercial Enroute yes").count()
-            group.commercial_birdstrike_total = group.commercial_arrival_birdstrike + group.commercial_departure_birdstrike + group.commercial_enroute_birdstrike
+            group.commercial_birdstrike_total = (
+                group.commercial_arrival_birdstrike + 
+                group.commercial_departure_birdstrike + 
+                group.commercial_enroute_birdstrike
+            )
 
             group.genav_arrival_birdstrike = items.filter(bird_strike__icontains="GenAv Arrival yes").count()
             group.genav_departure_birdstrike = items.filter(bird_strike__icontains="GenAv Departure yes").count()
@@ -365,7 +389,7 @@ def archive_clear_view(request):
         return render(request, 'main_site/clear_archive.html')
 
 @login_required
-def archive_delete_group_view(request, group_id):
+def archive_delete_view(request, group_id):
     group = ArchiveGroup.objects.get(id=group_id)
     group.items_set.all().delete()
     group.delete()

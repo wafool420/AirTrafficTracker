@@ -44,7 +44,6 @@ class ItemSerializer(serializers.ModelSerializer):
             else:
                 data["bird_strike"] = f"{flight_type} {movement} {bird_strike}"
 
-            # Validate Runway Incursion
             if runway_incursion.lower() not in ["yes", "no"]:
                 raise serializers.ValidationError({
                     "runway_incursion": "Runway Incursion must be either 'yes' or 'no'."
@@ -52,7 +51,6 @@ class ItemSerializer(serializers.ModelSerializer):
             else:
                 data["runway_incursion"] = f"{flight_type} {movement} {runway_incursion}"
 
-            # Validate Actual Time
             if actual_time:
                 data["actual_time"] = f"{flight_type} {actual_time}"
 

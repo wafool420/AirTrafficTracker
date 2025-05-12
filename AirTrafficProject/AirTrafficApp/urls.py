@@ -13,7 +13,7 @@ urlpatterns = [
     path('archive/', views.archive_dataset_view, name="archive"),
     path('archive_view/', views.archive_view, name="archive_view"),
     path('archive_clear/', views.archive_clear_view, name="clear_archive"),
-    path('archive/delete/<int:group_id>/', views.archive_delete_group_view, name='delete_archive_group'),
+    path('archive/delete/<int:group_id>/', views.archive_delete_view, name='delete_archive'),
 
 ]
 
