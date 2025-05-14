@@ -3,6 +3,9 @@
 import os
 import sys
 
+print("PYTHONPATH:", sys.path)
+sys.path.append('/opt/render/project/src/AirTrafficProject')
+
 
 def main():
     """Run administrative tasks."""
