@@ -34,11 +34,6 @@
       {{ form.type_of_flight.label_tag }}
       {{ form.type_of_flight }}
 
-      <div id="genav_wrapper">
-        {{ form.genav_detail.label_tag }}
-        {{ form.genav_detail }}
-      </div>
-
       {{ form.route_of_flight.label_tag }}
       {{ form.route_of_flight }}
   
@@ -62,7 +57,11 @@
       {{ form.timeliness.label_tag }}
       {{ form.timeliness }}
 
-      
+      <div id="genav_wrapper">
+        {{ form.genav_detail.label_tag }}
+        {{ form.genav_detail }}
+      </div>
+
       {{ form.bird_strike.label_tag }}
       <div class="radio_container">
             {{ form.bird_strike }}
