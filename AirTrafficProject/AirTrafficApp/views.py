@@ -5,7 +5,9 @@ from django.views import View
 from django.contrib.auth.models import User
 from .forms import RegisterForm, ItemForm
 from .models import Items, ArchiveGroup
+import logging
 
+logger = logging.getLogger(__name__)
 
 def register_view(request):
     if request.method == "POST":
