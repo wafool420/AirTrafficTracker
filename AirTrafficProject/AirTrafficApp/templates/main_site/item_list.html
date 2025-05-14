@@ -2,15 +2,41 @@
 {% block title %} Data {% endblock %}
 {% block content %}
 
-<h1 class="text-center mt-4 fw-bold mb-4">Data Table</h1>
+
 
 <style>
     table th, td{
         border: 3px solid black !important;
     }
+
+    @media (max-width: 768px) {
+        table {
+            font-size: 12px;
+        }
+
+        table th, table td {
+            padding: 5px;
+            white-space: nowrap;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .btn-group {
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    }
+
 </style>
 
-<div class="container-fluid px-5">
+<div class="container-fluid px-5 list-container">
+    <h1 class="text-center mt-4 fw-bold mb-4">Data Table</h1>
     <div class="table-responsive">
         <table class="table table-bordered table-sm table-primary text-center align-middle">
             <thead>

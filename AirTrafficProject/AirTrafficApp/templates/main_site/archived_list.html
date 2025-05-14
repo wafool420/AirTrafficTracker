@@ -9,6 +9,7 @@
         padding: 8px 10px !important;
         vertical-align: middle !important;
         border: 3px solid black !important;
+
     }
     
     .bg-color {
@@ -16,12 +17,32 @@
         background: linear-gradient(180deg, rgba(128, 219, 255, 1) 8%, rgba(80, 191, 222, 1) 53%);
     }
 
+    @media (max-width: 480px) {
+        .container {
+            max-height: 400px;
+            overflow-y: auto;
+            margin: 0 15px;
+        }
+
+        table {
+            font-size: 0.7rem;
+        }
+
+        .list-container {
+            padding: 0.25rem;
+        }
+
+        .table-responsive {
+            max-height: 250px;
+            overflow-y: auto;
+        }
+    }
 </style>
 
-<h1 class="text-center mt-4 fw-bold">Archived Datasets</h1>
+<h1 class="text-center mt-4 fw-bold list-container">Archived Datasets</h1>
 
 {% for archived in archive %} 
-    <div class="container mt-4 p-3 border border-dark border-3 rounded bg-color">
+    <div class="container mt-4 p-3 border border-dark border-3 rounded bg-color list-container">
         <p class="text-dark fw-bold">Created on: {{ archived.date_created|date:"F j, Y - h:i A" }}</p>
 
         <h3 class="text-center mb-3 fw-bold"> Data</h1>
@@ -346,10 +367,10 @@
         </div>
     </div>
 {% empty %}
-    <h4 class="text-center text-muted mt-5">No archived datasets available.</h4>
+    <h4 class="text-center text-muted mt-5 list-container">No archived datasets available.</h4>
 {% endfor %}
     
-<div class="d-flex justify-content-center gap-2 mt-4">
+<div class="d-flex justify-content-center gap-2 mt-4 list-container">
     <form method="GET" action="{% url 'clear_archive' %}">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger btn-lg mb-3">Clear Archive</button>
