@@ -8,6 +8,9 @@ https://docs.djangoproject.com/en/5.2/howto/deployment/wsgi/
 """
 
 import os
+import sys
+print("PYTHONPATH:", sys.path)
+sys.path.append('/opt/render/project/src/AirTrafficProject')
 
 from django.core.wsgi import get_wsgi_application
 
