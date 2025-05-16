@@ -22,11 +22,7 @@ class ItemSerializer(serializers.ModelSerializer):
         bird_strike = data.get("bird_strike")
         runway_incursion = data.get("runway_incursion")
         movement = data.get("movement")
-        user = data.get("user")
-
-        if user:
-            data["user"] = "Added via API"
-
+        
         # Ensure that the values are properly prefixed
         if flight_type:
             # Validate Timeliness
