@@ -95,21 +95,11 @@ WSGI_APPLICATION = 'AirTrafficProject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-IS_PRODUCTION = os.getenv('RENDER', 'False') == 'True'
-
-if IS_PRODUCTION:
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=os.getenv('DATABASE_URL')
-        )
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-    }
+DATABASES = {
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL')
+    )
+}
 
 
 # Password validation
