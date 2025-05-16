@@ -12,7 +12,7 @@ class ItemSerializer(serializers.ModelSerializer):
             'date_of_operation', 'call_sign', 'aircraft_type', 'detail',
             'origin', 'destination', 'route_of_flight', 'actual_time',
             'timeliness', 'type_of_flight', 'genav_detail', 'bird_strike',
-            'runway_incursion', 'movement'
+            'runway_incursion', 'movement', 'user'
         ]
 
     def validate(self, data):
@@ -22,6 +22,10 @@ class ItemSerializer(serializers.ModelSerializer):
         bird_strike = data.get("bird_strike")
         runway_incursion = data.get("runway_incursion")
         movement = data.get("movement")
+        user = data.get("user")
+
+        if user:
+            data["user"] = "Added via API"
 
         # Ensure that the values are properly prefixed
         if flight_type:
