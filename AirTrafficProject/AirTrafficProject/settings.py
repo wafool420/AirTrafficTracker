@@ -97,7 +97,7 @@ WSGI_APPLICATION = 'AirTrafficProject.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.getenv('postgres://airtrafficdb_user:JLem7bUS32B2zvJ66DT4ok4pl2Yww2r1@dpg-d0jectje5dus73cbuc40-a:5432/airtrafficdb')
+        default=os.getenv('postgresql://airtrafficdb_user:JLem7bUS32B2zvJ66DT4ok4pl2Yww2r1@dpg-d0jcetje5dus73cbuc40-a/airtrafficdb')
     )
 }
 
