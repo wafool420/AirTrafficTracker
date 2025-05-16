@@ -4,9 +4,9 @@
   
     <div class="home_container">
         {% if request.user.is_superuser %}
-            <h1>Welcome, Admin 🛠️</h1>
+            <h1 style="text-align: center;">Welcome, Admin 🛠️</h1>
         {% else %}
-            <h1>Welcome, {{request.user.first_name}} {{request.user.last_name}}</h1>
+            <h1 style="text-align: center;">Welcome, {{request.user.first_name}} {{request.user.last_name}}</h1>
         {% endif %}
         <div>
             <form method="GET" action="{% url 'items' %}">
